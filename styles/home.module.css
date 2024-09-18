@@ -1,0 +1,17 @@
+.container {
+  background-color: #000; /* Black background for the entire container */
+  color: #fff; /* White text color */
+  min-height: 100vh;
+  padding: 20px; /* Add padding around the container */
+}
+
+.mainContent {
+  display: flex;
+}
+
+.gameList {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 cards per row */
+  gap: 20px; /* Space between cards */
+  background-color: #111; /* Dark background for the game list */
+}
