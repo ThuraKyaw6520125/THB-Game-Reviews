@@ -1,16 +1,20 @@
-import { useRouter } from 'next/router'; // Import useRouter from next/router for navigation
+// components/GenreList.js
+
+import { useRouter } from 'next/router';
 import styles from '../styles/GenreList.module.css';
-import { FaGamepad, FaPuzzlePiece, FaFistRaised, FaBasketballBall, FaBullseye, FaGlobe, FaStar, FaStarHalfAlt, FaUsers, FaBuilding } from 'react-icons/fa'; // Import new icons
+import { FaGamepad, FaPuzzlePiece, FaFistRaised, FaBasketballBall, FaBullseye, FaGlobe, FaStar, FaStarHalfAlt, FaUsers, FaBuilding } from 'react-icons/fa';
 
 const GenreList = ({ onGenreSelect }) => {
-  const router = useRouter(); // Initialize useRouter
+  const router = useRouter();
 
   const handleGenreClick = (genre) => {
-    onGenreSelect(genre); // Pass the selected genre to the parent component to filter games
+    onGenreSelect(genre);
+    router.push('/'); // Navigate to the home page
   };
 
   const handleTopGameClick = (type) => {
-    onGenreSelect(type); // Pass the type of top game ('top-rated' or 'most-popular')
+    onGenreSelect(type);
+    router.push('/'); // Navigate to the home page
   };
 
   const navigateToPage = (page) => {
@@ -21,7 +25,7 @@ const GenreList = ({ onGenreSelect }) => {
     <div className={styles.genreList}>
       <button
         className={styles.allGamesButton}
-        onClick={() => handleGenreClick('')} // Pass an empty string to show all games
+        onClick={() => handleGenreClick('')}
       >
         <FaGlobe className={styles.iconButton} /> ALL Games
       </button>
@@ -29,13 +33,13 @@ const GenreList = ({ onGenreSelect }) => {
       <div className={styles.navigationButtons}>
         <button
           className={styles.navButton}
-          onClick={() => navigateToPage('developer')} // Navigate to Developer page
+          onClick={() => navigateToPage('developer')}
         >
           <FaUsers className={styles.iconButton} /> Developers
         </button>
         <button
           className={styles.navButton}
-          onClick={() => navigateToPage('publisher')} // Navigate to Publisher page
+          onClick={() => navigateToPage('publisher')}
         >
           <FaBuilding className={styles.iconButton} /> Publishers
         </button>
