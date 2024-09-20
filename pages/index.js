@@ -1,4 +1,6 @@
+// pages/index.js
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import Navbar from '../components/NavBar';
 import GenreList from '../components/GenreList';
 import Card from '../components/Card';
@@ -11,63 +13,80 @@ export default function Home() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedGenre, setSelectedGenre] = useState('');
   const [topGameType, setTopGameType] = useState('');
+  const router = useRouter();
 
   useEffect(() => {
     const fetchGames = async () => {
       try {
         let url = `https://api.rawg.io/api/games?key=${process.env.NEXT_PUBLIC_RAWG_API_KEY}`;
-
-        if (topGameType === 'top-rated') {
-          url += '&ordering=-rating'; // Fetch games ordered by rating (highest first)
-        } else if (topGameType === 'most-popular') {
-          url += '&ordering=-reviews_count'; // Fetch games ordered by review count (highest first)
-        }
-
         const response = await fetch(url);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         const gameList = await response.json();
-        setGames(gameList.results); // Ensure 'results' is the correct property
+        setGames(gameList.results);
       } catch (error) {
         setError(error.message);
         console.error('Fetch error:', error);
       }
     };
-
     fetchGames();
-  }, [topGameType]); // Refetch when topGameType changes
+  }, []);
 
   useEffect(() => {
-    if (selectedGenre) {
-      setFilteredGames(games.filter(game =>
-        game.genres && game.genres.some(g => g.name.toLowerCase() === selectedGenre.toLowerCase())
-      ));
+    if (router.query.genre) {
+      setSelectedGenre(router.query.genre);
+      setTopGameType('');
+    } else if (router.query.topGameType) {
+      setTopGameType(router.query.topGameType);
+      setSelectedGenre('');
     } else {
-      setFilteredGames(games.filter(game =>
-        game.name.toLowerCase().includes(searchTerm.toLowerCase())
-      ));
+      setSelectedGenre('');
+      setTopGameType('');
     }
-  }, [games, selectedGenre, searchTerm]); // Update filtered games when games, selectedGenre, or searchTerm changes
+  }, [router.query]);
+
+  useEffect(() => {
+    let updatedGames = [...games];
+    
+    if (topGameType === 'top-rated') {
+      updatedGames = updatedGames.sort((a, b) => b.rating - a.rating);
+    } else if (topGameType === 'most-popular') {
+      updatedGames = updatedGames.sort((a, b) => b.reviews_count - a.reviews_count);
+    }
+
+    if (selectedGenre) {
+      updatedGames = updatedGames.filter(game =>
+        game.genres && game.genres.some(g => g.name.toLowerCase() === selectedGenre.toLowerCase())
+      );
+    }
+
+    if (searchTerm) {
+      updatedGames = updatedGames.filter(game =>
+        game.name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    setFilteredGames(updatedGames);
+  }, [games, selectedGenre, searchTerm, topGameType]);
 
   const handleGenreSelect = (genre) => {
-    if (genre === '') {
-      setSelectedGenre(''); // Clear genre filter to show all games
-      setTopGameType(''); // Clear top game type filter
-    } else if (['top-rated', 'most-popular'].includes(genre)) {
-      setTopGameType(genre); // Update top game type
-      setSelectedGenre(''); // Clear genre filter
-    } else {
-      setSelectedGenre(genre); // Update genre filter
-      setTopGameType(''); // Clear top game type filter
-    }
+    setSelectedGenre(genre);
+    setTopGameType('');
+    router.push(genre ? `/?genre=${genre}` : '/');
+  };
+
+  const handleTopGameSelect = (type) => {
+    setTopGameType(type);
+    setSelectedGenre('');
+    router.push(`/?topGameType=${type}`);
   };
 
   return (
     <div className={styles.container}>
       <Navbar setSearchTerm={setSearchTerm} />
       <div className={styles.mainContent}>
-        <GenreList onGenreSelect={handleGenreSelect} />
+        <GenreList onGenreSelect={handleGenreSelect} onTopGameSelect={handleTopGameSelect} />
         <div className={styles.gameList}>
           {error && <div>Error: {error}</div>}
           {filteredGames.map((game) => (
@@ -80,7 +99,8 @@ export default function Home() {
               genre={game.genres ? game.genres.map(g => g.name).join(', ') : 'N/A'}
               releaseDate={game.released || 'N/A'}
               rating={game.rating || 'N/A'}
-              trailerUrl={game.website || '#'} // Provide a valid trailer URL or placeholder
+              playCount={game.playtime || 'N/A'}
+              trailerUrl={game.website || '#'}
             />
           ))}
         </div>
