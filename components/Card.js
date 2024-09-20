@@ -1,8 +1,6 @@
-// components/Card.js
-
 import styles from '../styles/Card.module.css';
 
-const Card = ({ title, image, genre, releaseDate, rating }) => {
+const Card = ({ title, image, genre, releaseDate, rating, playCount }) => {
   return (
     <div className={styles.cardWrapper}>
       <div className={styles.card}>
@@ -15,6 +13,7 @@ const Card = ({ title, image, genre, releaseDate, rating }) => {
             <p><strong>Genre:</strong> {genre}</p>
             <p><strong>Release Date:</strong> {releaseDate}</p>
             <p><strong>Rating:</strong> {rating}/10</p>
+            <p><strong>Play Count:</strong> {playCount}</p>
           </div>
         </div>
       </div>
