@@ -1,35 +1,38 @@
-// components/GenreList.js
-
 import { useRouter } from 'next/router';
 import styles from '../styles/GenreList.module.css';
 import { FaGamepad, FaPuzzlePiece, FaFistRaised, FaBasketballBall, FaBullseye, FaGlobe, FaStar, FaStarHalfAlt, FaUsers, FaBuilding } from 'react-icons/fa';
 
-const GenreList = ({ onGenreSelect }) => {
+const GenreList = ({ onGenreSelect, onTopGameSelect }) => {
   const router = useRouter();
 
   const handleGenreClick = (genre) => {
     onGenreSelect(genre);
-    router.push('/'); // Navigate to the home page
+    router.push(`/?genre=${genre}`);
   };
 
   const handleTopGameClick = (type) => {
-    onGenreSelect(type);
-    router.push('/'); // Navigate to the home page
+    onTopGameSelect(type);
+    router.push(`/?topGameType=${type}`);
+  };
+
+  const handleAllGamesClick = () => {
+    onGenreSelect('');
+    onTopGameSelect('');
+    router.push('/');
   };
 
   const navigateToPage = (page) => {
-    router.push(`/${page}`); // Navigate to the specified page
+    router.push(`/${page}`);
   };
 
   return (
     <div className={styles.genreList}>
       <button
         className={styles.allGamesButton}
-        onClick={() => handleGenreClick('')}
+        onClick={handleAllGamesClick}
       >
         <FaGlobe className={styles.iconButton} /> ALL Games
       </button>
-
       <div className={styles.navigationButtons}>
         <button
           className={styles.navButton}
@@ -44,7 +47,6 @@ const GenreList = ({ onGenreSelect }) => {
           <FaBuilding className={styles.iconButton} /> Publishers
         </button>
       </div>
-
       <h2>Top Games</h2>
       <ul>
         <li onClick={() => handleTopGameClick('top-rated')}>
@@ -54,7 +56,6 @@ const GenreList = ({ onGenreSelect }) => {
           <FaStarHalfAlt className={styles.iconButton} /> Most Popular
         </li>
       </ul>
-
       <h2>Genres</h2>
       <ul>
         <li onClick={() => handleGenreClick('Action')}>
