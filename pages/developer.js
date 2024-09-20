@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import Navbar from '../components/NavBar';
 import GenreList from '../components/GenreList';
 import InfoCard from '../components/InfoCard';
@@ -8,6 +9,7 @@ const DeveloperPage = () => {
   const [developers, setDevelopers] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchDevelopers = async () => {
@@ -24,26 +26,40 @@ const DeveloperPage = () => {
         setLoading(false);
       }
     };
-
     fetchDevelopers();
   }, []);
+
+  const handleGenreSelect = (genre) => {
+    router.push(`/?genre=${genre}`);
+  };
+
+  const handleTopGameSelect = (type) => {
+    router.push(`/?topGameType=${type}`);
+  };
+
+  const handleAllGamesClick = () => {
+    router.push('/');
+  };
 
   return (
     <div className={styles.container}>
       <Navbar />
       <div className={styles.mainContent}>
-        <GenreList onGenreSelect={() => {}} /> {/* Placeholder */}
+        <GenreList 
+          onGenreSelect={handleGenreSelect}
+          onTopGameSelect={handleTopGameSelect}
+          onAllGamesClick={handleAllGamesClick}
+        />
         <div className={styles.gameList}>
           {loading && <div>Loading developers...</div>}
           {error && <div>Error: {error}</div>}
-
           {developers.map((developer) => (
             <InfoCard
               key={developer.id}
               name={developer.name}
               image={developer.image_background || '/default-image.jpg'}
               developerId={developer.id}
-              gamesCount={developer.games_count || 0} // Pass games count directly
+              gamesCount={developer.games_count || 0}
             />
           ))}
         </div>
