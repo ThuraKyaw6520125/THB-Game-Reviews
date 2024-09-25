@@ -1,0 +1,49 @@
+body {
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  padding: 20px;
+}
+
+.mainContent {
+  display: flex;
+}
+
+.gameList {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* Apply global styles */
+body {
+  background-color: #000; /* Set background color to black */
+  color: #fff; /* Set default text color to white */
+  margin: 0;
+  font-family: Arial, sans-serif; /* You can choose a different font if you prefer */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
