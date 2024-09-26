@@ -1,4 +1,12 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = { 
 
-export default nextConfig;
+      experimental: { 
+    
+        instrumentationHook: true, 
+    
+      }, 
+    
+    }; 
+    
+    export default nextConfig; 

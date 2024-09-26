@@ -1,36 +1,81 @@
-.container {
-  padding: 20px;
-  max-width: 1200px;
-  margin: auto;
-}
-
-.publisherList {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.publisherCard {
-  background-color: #f0f0f0;
+/* PublisherCard.module.css */
+.card {
+  position: relative;
+  width: 250px;
+  height: 300px;
+  border: 1px solid #333;
   border-radius: 8px;
-  padding: 20px;
+  overflow: hidden;
   margin: 10px;
-  width: calc(33% - 40px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  text-align: center;
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  background-color: #000;
+  color: #fff;
 }
 
-.publisherCard:hover {
-  transform: scale(1.05);
+.card.expanded {
+  height: 380px;
 }
 
-.publisherImage {
-  width: 100px;
-  height: auto;
-  border-radius: 8px;
-  margin-bottom: 10px;
+.image {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
 }
 
-.publisherDetails {
+.details {
+  padding: 15px;
+  height: calc(100% - 150px);
+  display: flex;
+  flex-direction: column;
+}
+
+.name {
+  margin: 0 0 10px 0;
+  font-size: 1.2em;
+  color: #fff;
+}
+
+.popularItem {
+  margin: 0 0 10px 0;
+  font-size: 0.9em;
+  color: #ccc;
+  display: flex;
+  align-items: center;
+}
+
+.expandedDetails {
   margin-top: 10px;
+}
+
+.expandedDetails ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.expandedDetails li {
+  margin-bottom: 5px;
+  font-size: 0.9em;
+  color: #ccc;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.gameName {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.gameCount {
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  margin-right: 5px;
 }

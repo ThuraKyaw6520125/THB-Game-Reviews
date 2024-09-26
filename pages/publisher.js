@@ -16,7 +16,7 @@ const PublisherPage = () => {
   useEffect(() => {
     const fetchPublishers = async () => {
       try {
-        const URL = `https://api.rawg.io/api/publishers?key=${process.env.NEXT_PUBLIC_RAWG_API_KEY}&page_size=10`;
+        const URL = `https://api.rawg.io/api/publishers?key=${process.env.NEXT_PUBLIC_RAWG_API_KEY}&page_size=20`;
         const response = await fetch(URL);
         if (!response.ok) throw new Error('Failed to fetch publishers');
         const data = await response.json();
@@ -54,27 +54,34 @@ const PublisherPage = () => {
 
   return (
     <div className={styles.container}>
-      <Navbar setSearchTerm={setSearchTerm} /> {/* Pass setSearchTerm to Navbar */}
       <div className={styles.mainContent}>
-        <GenreList 
-          onGenreSelect={handleGenreSelect}
-          onTopGameSelect={handleTopGameSelect}
-          onAllGamesClick={handleAllGamesClick}
-        />
-        <div className={styles.gameList}>
-          {loading && <div>Loading publishers...</div>}
-          {error && <div>Error: {error}</div>}
-          {filteredPublishers.map((publisher) => (
-            <PublisherCard
-              key={publisher.id}
-              name={publisher.name}
-              image={publisher.image_background || '/default-image.jpg'}
-              popularGames={publisher.games}
-              gamesCount={publisher.games_count}
-            />
-          ))}
+        <div className={styles.genreListContainer}>
+          <GenreList 
+            onGenreSelect={handleGenreSelect}
+            onTopGameSelect={handleTopGameSelect}
+            onAllGamesClick={handleAllGamesClick}
+          />
+        </div>
+        <div>
+          <div className={styles.navbar}>
+            <Navbar setSearchTerm={setSearchTerm} /> {/* Pass setSearchTerm to Navbar */}
+          </div>
+          <div className={styles.gameList}>
+            {loading && <div>Loading publishers...</div>}
+            {error && <div>Error: {error}</div>}
+            {filteredPublishers.map((publisher) => (
+              <PublisherCard
+                key={publisher.id}
+                name={publisher.name}
+                image={publisher.image_background || '/default-image.jpg'}
+                popularGames={publisher.games}
+                gamesCount={publisher.games_count}
+              />
+            ))}
+          </div>
         </div>
       </div>
+      
     </div>
   );
 };

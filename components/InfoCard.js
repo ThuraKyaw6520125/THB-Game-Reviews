@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { FaUser } from 'react-icons/fa'; // Import person icon
 import { useRouter } from 'next/router';
-import styles from '../styles/InfoCard.module.css';
+import styles from '../styles/Card.module.css';
 
 const InfoCard = ({ name, image, developerId, gamesCount }) => {
   const [topGames, setTopGames] = useState([]);
