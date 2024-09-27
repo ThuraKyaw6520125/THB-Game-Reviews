@@ -1,4 +1,4 @@
-// api/gameData.js
+/* api/gameData.js
 
 export const fetchGames = async () => {
   const API_KEY = process.env.NEXT_PUBLIC_RAWG_API_KEY;
@@ -13,4 +13,4 @@ export const fetchGames = async () => {
     console.error('Error fetching games:', error);
     return [];
   }
-};
+};*/

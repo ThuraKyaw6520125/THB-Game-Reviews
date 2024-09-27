@@ -67,14 +67,8 @@ const GenreList = ({ onGenreSelect, onTopGameSelect }) => {
         <li onClick={() => handleGenreClick('Puzzle')}>
           <FaPuzzlePiece className={styles.iconButton} /> Puzzle
         </li>
-        <li onClick={() => handleGenreClick('Sport')}>
-          <FaBasketballBall className={styles.iconButton} /> Sport
-        </li>
         <li onClick={() => handleGenreClick('Shooter')}>
           <FaBullseye className={styles.iconButton} /> Shooter
-        </li>
-        <li onClick={() => handleGenreClick('Free Online Game')}>
-          <FaGlobe className={styles.iconButton} /> Free Online Game
         </li>
         <li onClick={() => handleGenreClick('RPG')}>
           <FaGamepad className={styles.iconButton} /> RPG
